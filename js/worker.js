@@ -29,4 +29,4 @@ var gameTick = function () {
 
 };
 
-self.setInterval(gameTick, 30);
+self.setInterval(gameTick, 32);

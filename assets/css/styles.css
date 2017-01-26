@@ -4,35 +4,49 @@
     overflow:hidden;
 }
 .map{
-    width:100%;
-    height:100vh;
-    background:url('../img/map.png') no-repeat;
-    background-size:cover;
+    width:320px;
+    height:320px;
 }
 .player{
     position:absolute;
-    bottom:50%;
+    top:0;
     left:0;
-    width:56px;
-    height:60px;
-    background:url('../img/zou.png') no-repeat;
-    animation: move 0.5s steps(3) infinite;
+    width:32px;
+    height:32px;
+    background:url('../img/link.png') no-repeat;
+    animation: move .3s steps(6) infinite;
+}
+.row{
+    line-height: 0px;
+}
+.grass{
+    display: inline-block;
+    width:32px;
+    height:32px;
+    background:url('../img/grass.jpg') no-repeat;
+}
+.rock{
+    display: inline-block;
+    width:32px;
+    height:32px;
+    background:url('../img/rocks.png') no-repeat;
+    background-position-y: -32px;
 }
 .player.top{
-    animation: move 0.5s steps(3) infinite;
-    background-position-y:-120px;
-}
-.player.bottom{
-    animation: move 0.5s steps(3) infinite;
-    background-position-y:-180px;
-}
-.player.left{
-    animation: move 0.5s steps(3) infinite;
+    animation: move .3s steps(6) infinite;
     background-position-y:0px;
 }
+.player.bottom{
+    animation: move .3s steps(6) infinite;
+    background-position-y:-64px;
+}
+.player.left{
+    animation: move .3s steps(6) infinite;
+    background-position-y:-32px;
+}
 .player.right{
-    animation: move 0.5s steps(3) infinite;
-    background-position-y:-60px;
+    animation: move .3s steps(6) infinite;
+    background-position-y:-96px;
 }
 .player.stopRunning{
     animation-play-state: paused;
@@ -43,7 +57,7 @@
         background-position-x:0px;
     }
     100%{
-        background-position-x:-168px;
+        background-position-x:-192px;
     }
 }
 

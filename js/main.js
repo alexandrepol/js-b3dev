@@ -9,6 +9,32 @@
 //Sprite
 var charlie = $('.player');
 
+//Création du tableau de la map
+var map = [];
+for(var i=0;i<10;i++){
+    map.push([]);
+    for(var j=0;j<10;j++){
+        map[i].push( Math.round(Math.random()) );
+    }
+}
+console.log(map);
+//Display de la map
+for(var i=0;i<10;i++){
+    $('.map').append("<div class='row'></div>");
+    for(var n=0;n<10;n++){
+         switch (map[i][n]){
+         case 0:
+         $('.row').eq(i).append("<div class='grass'></div>");
+         break;
+         case 1:
+         $('.row').eq(i).append("<div class='rock'></div>")
+         break;
+         }
+
+    }
+}
+
+
 
 var moveRequest = {
     top:0,
@@ -44,8 +70,6 @@ $(".map").on("keydown keyup", function(e){
     }
 
     w.postMessage(moveRequest);
-
-
 
     moveRequest = {
         top:0,
