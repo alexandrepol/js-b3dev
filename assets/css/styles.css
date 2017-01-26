@@ -1,0 +1,49 @@
+*{
+    padding:0;
+    margin:0;
+    overflow:hidden;
+}
+.map{
+    width:100%;
+    height:100vh;
+    background:url('../img/map.png') no-repeat;
+    background-size:cover;
+}
+.player{
+    position:absolute;
+    bottom:50%;
+    left:0;
+    width:56px;
+    height:60px;
+    background:url('../img/zou.png') no-repeat;
+    animation: move 0.5s steps(3) infinite;
+}
+.player.top{
+    animation: move 0.5s steps(3) infinite;
+    background-position-y:-120px;
+}
+.player.bottom{
+    animation: move 0.5s steps(3) infinite;
+    background-position-y:-180px;
+}
+.player.left{
+    animation: move 0.5s steps(3) infinite;
+    background-position-y:0px;
+}
+.player.right{
+    animation: move 0.5s steps(3) infinite;
+    background-position-y:-60px;
+}
+.player.stopRunning{
+    animation-play-state: paused;
+
+}
+@keyframes move{
+    0%{
+        background-position-x:0px;
+    }
+    100%{
+        background-position-x:-168px;
+    }
+}
+
