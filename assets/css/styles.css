@@ -1,11 +1,16 @@
 *{
     padding:0;
     margin:0;
-    overflow:hidden;
 }
-.map{
+#viewport{
     width:320px;
     height:320px;
+    overflow: hidden;
+}
+.map{
+    width: 3200px;
+    height: 3200px;
+    transition: all .2s ease;
 }
 .player{
     position:absolute;
@@ -15,6 +20,8 @@
     height:32px;
     background:url('../img/link.png') no-repeat;
     animation: move .3s steps(6) infinite;
+    transition: transform .2s linear;
+
 }
 .row{
     line-height: 0px;

@@ -8,41 +8,14 @@
 
 //Sprite
 var charlie = $('.player');
-
-//Création du tableau de la map
-var map = [];
-for(var i=0;i<10;i++){
-    map.push([]);
-    for(var j=0;j<10;j++){
-        map[i].push( Math.round(Math.random()) );
-    }
-}
-console.log(map);
-//Display de la map
-for(var i=0;i<10;i++){
-    $('.map').append("<div class='row'></div>");
-    for(var n=0;n<10;n++){
-         switch (map[i][n]){
-         case 0:
-         $('.row').eq(i).append("<div class='grass'></div>");
-         break;
-         case 1:
-         $('.row').eq(i).append("<div class='rock'></div>")
-         break;
-         }
-
-    }
-}
-
-
-
+var world = $('.map');
 var moveRequest = {
     top:0,
     left:0
 }
 
 //Clavier
-$(".map").on("keydown keyup", function(e){
+$("#viewport").on("keydown keyup", function(e){
     var keypress = e.keyCode;
     var keytype = e.type;
     charlie.removeClass('stopRunning');
@@ -51,16 +24,24 @@ $(".map").on("keydown keyup", function(e){
     if([68,81,83,90].indexOf(keypress) != -1){
         switch(keypress){
             case 68 :
+                charlie.removeClass('top left bottom');
                 moveRequest.left = (keytype == 'keydown')?-1:0;
+                charlie.addClass('right');
                 break;
             case 81 :
+                charlie.removeClass('top right bottom');
                 moveRequest.left = (keytype == 'keydown')?1:0;
+                charlie.addClass('left');
                 break;
             case 90:
+                charlie.removeClass('left right bottom');
                 moveRequest.top = (keytype == 'keydown')?1:0;
+                charlie.addClass('top');
                 break;
             case 83:
+                charlie.removeClass('top left right');
                 moveRequest.top = (keytype == 'keydown')?-1:0;
+                charlie.addClass('bottom');
                 break;
         }
     }
@@ -98,8 +79,23 @@ $('.map').on('mousemove', function(e){
 
 w.onmessage = function(event){
     //console.log('worker returned : ', event.data);
+        //Affiche la map
+        $('.row').remove();
+        for(var i=0;i<event.data.map.length;i++){
+            world.append("<div class='row'></div>");
+            for(var n=0;n<10;n++){
+                switch (event.data.map[i][n]){
+                    case 0:
+                        $('.row').eq(i).append("<div class='grass'></div>");
+                        break;
+                    case 1:
+                        $('.row').eq(i).append("<div class='rock'></div>");
+                    break;
+                }
+            }
+        }
+    charlie.css('transform', 'translate(' + event.data.player.left*32 + 'px,' + event.data.player.top*32 + 'px)');
 
-    charlie.css('transform', 'translate(' + event.data.left*6 + 'px,' + event.data.top*6 + 'px)');
 };
 
 w.onerror = function(error) {
