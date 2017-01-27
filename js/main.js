@@ -24,24 +24,16 @@ $("#viewport").on("keydown keyup", function(e){
     if([68,81,83,90].indexOf(keypress) != -1){
         switch(keypress){
             case 68 :
-                charlie.removeClass('top left bottom');
                 moveRequest.left = (keytype == 'keydown')?-1:0;
-                charlie.addClass('right');
                 break;
             case 81 :
-                charlie.removeClass('top right bottom');
                 moveRequest.left = (keytype == 'keydown')?1:0;
-                charlie.addClass('left');
                 break;
             case 90:
-                charlie.removeClass('left right bottom');
                 moveRequest.top = (keytype == 'keydown')?1:0;
-                charlie.addClass('top');
                 break;
             case 83:
-                charlie.removeClass('top left right');
                 moveRequest.top = (keytype == 'keydown')?-1:0;
-                charlie.addClass('bottom');
                 break;
         }
     }
@@ -77,10 +69,15 @@ w.onmessage = function(event){
         //Affiche la map
         $('.row').remove();
         let bot1 = event.data.listPlayer[1];
-        console.log(bot1);
+        let bot2 = event.data.listPlayer[2];
+
         if($("#"+bot1.id).length == 0){
             world.append("<span id='"+bot1.id+"'class='"+bot1.class+" stopRunning'></span>");
         }
+        if($("#"+bot2.id).length == 0){
+            world.append("<span id='"+bot2.id+"'class='"+bot2.class+" stopRunning'></span>");
+        }
+
         for(var i=0;i<event.data.map.length;i++){
             world.append("<div class='row'></div>");
             for(var n=0;n<10;n++){
@@ -95,9 +92,17 @@ w.onmessage = function(event){
             }
         }
     /*Mouvements des robots*/
+    $("#"+bot1.id).removeClass("top left right bottom");
+    $("#"+bot2.id).removeClass("top left right bottom");
     $("#"+bot1.id).css('transform', 'translate(' + event.data.listPlayer[1].x*32 + 'px,' + event.data.listPlayer[1].y*32 + 'px)');
+    $("#"+bot2.id).css('transform', 'translate(' + event.data.listPlayer[2].x*32 + 'px,' + event.data.listPlayer[2].y*32 + 'px)');
+    $("#"+bot1.id).addClass(bot1.orientation);
+    $("#"+bot2.id).addClass(bot2.orientation);
 
+
+    charlie.removeClass("top left right bottom");
     charlie.css('transform', 'translate(' + event.data.listPlayer[0].x*32 + 'px,' + event.data.listPlayer[0].y*32 + 'px)');
+    charlie.addClass(event.data.listPlayer[0].orientation);
 
 };
 

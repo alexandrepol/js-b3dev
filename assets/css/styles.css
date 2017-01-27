@@ -51,25 +51,32 @@
     background-position-y: -32px;
 }
 
-.player.top{
+.player.top, .ennemy.top{
     animation: move .3s steps(6) infinite;
     background-position-y:0px;
 }
-.player.bottom{
+.player.bottom, .ennemy.bottom{
     animation: move .3s steps(6) infinite;
     background-position-y:-64px;
 }
-.player.left{
+.player.left, .ennemy.left{
     animation: move .3s steps(6) infinite;
     background-position-y:-32px;
 }
-.player.right{
+.player.right, .ennemy.right{
     animation: move .3s steps(6) infinite;
     background-position-y:-96px;
 }
 .player.stopRunning{
     animation-play-state: paused;
 
+}
+.loose{
+    width:500px;
+    height:500px;
+    margin:auto;
+    position:fixed;
+    background-color:red;
 }
 @keyframes move{
     0%{

@@ -17,17 +17,27 @@ class Entity{
     get position() {
         return ([this.x, this.y]);
     }
+
+    set bearing(bearing){
+        this.orientation = bearing;
+    }
+
+    get bearing(){
+        return (this.orientation);
+    }
 }
 
 //Position initiale du joueur
 let player = new Entity('player', 0, 0);
 let bot1 = new Entity('ennemy', 5, 5);
+let bot2 = new Entity('ennemy', 5, 6);
+
 
 
 //Création initiale de la map
 let world = {
     map:[],
-    listPlayer:[player,bot1]
+    listPlayer:[player,bot1,bot2],
 };
 for(var i=0;i<10;i++){
     world.map.push([]);
@@ -50,9 +60,81 @@ onmessage = function (event) {
 // le tick
 let gameTick = function () {
     //console.log(world.player);
+    let sMoveRequest = {
+        top:0,
+        left:0
+    }
+
+    //Simulation des moveRequest pour les bots
+    for(let i=0;i<world.listPlayer.length;i++){
+        if(world.listPlayer[i].class == 'ennemy'){
+            switch (world.listPlayer[i].x){
+                case 0:
+                    sMoveRequest.left = -1;
+                    break;
+                case 9:
+                    sMoveRequest.left = 1;
+                    break;
+                default:
+                    sMoveRequest.left = Math.floor(Math.random()*3 )-1 ;
+                    break;
+            }
+
+            switch (world.listPlayer[i].y){
+                case 0:
+                    sMoveRequest.top = -1;
+                    break;
+                case 9:
+                    sMoveRequest.top = 1;
+                    break;
+                default:
+                    sMoveRequest.top = Math.floor(Math.random()*3 )-1 ;
+                    break;
+            }
+
+            let nextX = world.listPlayer[i].position[0] - (sMoveRequest.left );
+            let nextY = world.listPlayer[i].position[1] - (sMoveRequest.top);
+            world.listPlayer[i].position = [nextX, nextY];
+
+            if(sMoveRequest.left > 0){
+                world.listPlayer[i].bearing = 'left';
+            }
+            if(sMoveRequest.left < 0){
+                world.listPlayer[i].bearing = 'right';
+            }
+            if(sMoveRequest.top > 0){
+                world.listPlayer[i].bearing = 'top';
+            }
+            if(sMoveRequest.top < 0){
+                world.listPlayer[i].bearing = 'bottom';
+            }
+        }
+
+    }
+
+    if(moveRequest.left > 0){
+        world.listPlayer[0].bearing = 'left';
+    }
+    if(moveRequest.left < 0){
+        world.listPlayer[0].bearing = 'right';
+    }
+    if(moveRequest.top > 0){
+        world.listPlayer[0].bearing = 'top';
+    }
+    if(moveRequest.top < 0){
+        world.listPlayer[0].bearing = 'bottom';
+    }
+
+
     var nextX = world.listPlayer[0].position[0] - (moveRequest.left );
     var nextY = world.listPlayer[0].position[1] - (moveRequest.top);
     world.listPlayer[0].position = [nextX, nextY];
+
+    //Detection des colisions
+    for(let i=1;i<world.listPlayer.length;i++){
+        console.log(world.listPlayer[i].position);
+    }
+
     postMessage(world);
 
 
