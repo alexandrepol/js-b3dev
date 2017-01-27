@@ -52,10 +52,6 @@ $("#viewport").on("keydown keyup", function(e){
 
     w.postMessage(moveRequest);
 
-    moveRequest = {
-        top:0,
-        left:0
-    }
 
 });
 
@@ -76,9 +72,8 @@ $('.map').on('mousemove', function(e){
 */
 
 //event trigger qui reçoit les messages des workers
-
 w.onmessage = function(event){
-    //console.log('worker returned : ', event.data);
+    console.log('worker returned : ', event.data);
         //Affiche la map
         $('.row').remove();
         for(var i=0;i<event.data.map.length;i++){
@@ -94,7 +89,7 @@ w.onmessage = function(event){
                 }
             }
         }
-    charlie.css('transform', 'translate(' + event.data.player.left*32 + 'px,' + event.data.player.top*32 + 'px)');
+    charlie.css('transform', 'translate(' + event.data.player.x*32 + 'px,' + event.data.player.y*32 + 'px)');
 
 };
 

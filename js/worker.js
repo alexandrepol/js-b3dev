@@ -2,23 +2,30 @@
  * Created by POL on 19/01/2017.
  */
 
-//Position initiale du joueur
-var player = {
-    top:0,
-    left:0
+class Entity{
+    constructor(className, posX, posY) {
+        this.class = className;
+        this.position = [posX, posY];
+        this.id = "Entity" + Math.round(Math.random() * 65000);
+    }
+
+    set position(position) {
+        this.x = position[0];
+        this.y = position[1];
+    }
+
+    get position() {
+        return ([this.x, this.y]);
+    }
 }
 
-//Coords du joueur
-var playerCoords = {
-    x:0,
-    y:0
-}
+//Position initiale du joueur
+let player = new Entity('player', 0, 0);
 
 //Création initiale de la map
-var world = {
+let world = {
     map:[],
     player:player,
-    playerCoords:playerCoords
 };
 for(var i=0;i<10;i++){
     world.map.push([]);
@@ -28,22 +35,22 @@ for(var i=0;i<10;i++){
 }
 
 //demande de déplacement / Objet link
-var moveRequest = {
+let moveRequest = {
     top : 0,
     left : 0
 };
 
-var onmessage = function (event) {
+onmessage = function (event) {
     //console.log(event.data);
     moveRequest = event.data;
 }
 
 // le tick
-var gameTick = function () {
-    var nextX = world.player.left - (moveRequest.left );
-    var nextY = world.player.top - (moveRequest.top);
-    world.player.left = nextX;
-    world.player.top = nextY;
+let gameTick = function () {
+    //console.log(world.player);
+    var nextX = world.player.position[0] - (moveRequest.left );
+    var nextY = world.player.position[1] - (moveRequest.top);
+    world.player.position = [nextX, nextY];
     postMessage(world);
 };
 
