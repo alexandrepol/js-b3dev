@@ -73,9 +73,14 @@ $('.map').on('mousemove', function(e){
 
 //event trigger qui reçoit les messages des workers
 w.onmessage = function(event){
-    console.log('worker returned : ', event.data);
+    //console.log('worker returned : ', event.data);
         //Affiche la map
         $('.row').remove();
+        let bot1 = event.data.listPlayer[1];
+        console.log(bot1);
+        if($("#"+bot1.id).length == 0){
+            world.append("<span id='"+bot1.id+"'class='"+bot1.class+" stopRunning'></span>");
+        }
         for(var i=0;i<event.data.map.length;i++){
             world.append("<div class='row'></div>");
             for(var n=0;n<10;n++){
@@ -89,7 +94,10 @@ w.onmessage = function(event){
                 }
             }
         }
-    charlie.css('transform', 'translate(' + event.data.player.x*32 + 'px,' + event.data.player.y*32 + 'px)');
+    /*Mouvements des robots*/
+    $("#"+bot1.id).css('transform', 'translate(' + event.data.listPlayer[1].x*32 + 'px,' + event.data.listPlayer[1].y*32 + 'px)');
+
+    charlie.css('transform', 'translate(' + event.data.listPlayer[0].x*32 + 'px,' + event.data.listPlayer[0].y*32 + 'px)');
 
 };
 

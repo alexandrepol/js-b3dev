@@ -21,11 +21,13 @@ class Entity{
 
 //Position initiale du joueur
 let player = new Entity('player', 0, 0);
+let bot1 = new Entity('ennemy', 5, 5);
+
 
 //Création initiale de la map
 let world = {
     map:[],
-    player:player,
+    listPlayer:[player,bot1]
 };
 for(var i=0;i<10;i++){
     world.map.push([]);
@@ -48,10 +50,12 @@ onmessage = function (event) {
 // le tick
 let gameTick = function () {
     //console.log(world.player);
-    var nextX = world.player.position[0] - (moveRequest.left );
-    var nextY = world.player.position[1] - (moveRequest.top);
-    world.player.position = [nextX, nextY];
+    var nextX = world.listPlayer[0].position[0] - (moveRequest.left );
+    var nextY = world.listPlayer[0].position[1] - (moveRequest.top);
+    world.listPlayer[0].position = [nextX, nextY];
     postMessage(world);
+
+
 };
 
 self.setInterval(gameTick, 200);

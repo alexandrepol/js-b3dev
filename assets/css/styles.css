@@ -23,6 +23,17 @@
     transition: transform .2s linear;
 
 }
+.ennemy{
+    position:absolute;
+    top:0;
+    left:0;
+    width:32px;
+    height:32px;
+    background:url('../img/link.png') no-repeat;
+    animation: move .3s steps(6) infinite;
+    transition: transform .2s linear;
+}
+
 .row{
     line-height: 0px;
 }
@@ -39,6 +50,7 @@
     background:url('../img/rocks.png') no-repeat;
     background-position-y: -32px;
 }
+
 .player.top{
     animation: move .3s steps(6) infinite;
     background-position-y:0px;
