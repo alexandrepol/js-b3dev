@@ -68,33 +68,15 @@ let gameTick = function () {
     //Simulation des moveRequest pour les bots
     for(let i=0;i<world.listPlayer.length;i++){
         if(world.listPlayer[i].class == 'ennemy'){
-            switch (world.listPlayer[i].x){
-                case 0:
-                    sMoveRequest.left = -1;
-                    break;
-                case 9:
-                    sMoveRequest.left = 1;
-                    break;
-                default:
-                    sMoveRequest.left = Math.floor(Math.random()*3 )-1 ;
-                    break;
-            }
 
-            switch (world.listPlayer[i].y){
-                case 0:
-                    sMoveRequest.top = -1;
-                    break;
-                case 9:
-                    sMoveRequest.top = 1;
-                    break;
-                default:
-                    sMoveRequest.top = Math.floor(Math.random()*3 )-1 ;
-                    break;
-            }
+            sMoveRequest.left = Math.floor(Math.random()*3 )-1 ;
+            sMoveRequest.top = Math.floor(Math.random()*3 )-1 ;
+
 
             let nextX = world.listPlayer[i].position[0] - (sMoveRequest.left );
             let nextY = world.listPlayer[i].position[1] - (sMoveRequest.top);
-            world.listPlayer[i].position = [nextX, nextY];
+            //Math.max(Math.min(nextX,9), 0);
+            world.listPlayer[i].position = [Math.max(Math.min(nextX,9), 0), Math.max(Math.min(nextY,9), 0)];
 
             if(sMoveRequest.left > 0){
                 world.listPlayer[i].bearing = 'left';
@@ -128,7 +110,7 @@ let gameTick = function () {
 
     var nextX = world.listPlayer[0].position[0] - (moveRequest.left );
     var nextY = world.listPlayer[0].position[1] - (moveRequest.top);
-    world.listPlayer[0].position = [nextX, nextY];
+    world.listPlayer[0].position = [Math.max(Math.min(nextX,9), 0), Math.max(Math.min(nextY,9), 0)];
 
     //Detection des colisions
     for(let i=1;i<world.listPlayer.length;i++){
